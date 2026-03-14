@@ -1,0 +1,39 @@
+server:
+  http_port: 8080
+  grpc_port: 9090
+  shutdown_timeout: 30s
+
+database:
+  url: "postgres://root@localhost:26257/payments?sslmode=disable"
+  max_connections: 50
+  max_idle: 10
+
+redis:
+  url: "localhost:6379"
+  pool_size: 50
+
+kafka:
+  brokers:
+    - "localhost:9092"
+  consumer_group: "payment-gateway"
+
+idempotency:
+  ttl: 24h
+  key_prefix: "idempotency:"
+
+saga:
+  step_timeout: 30s
+  max_retries: 3
+  retry_backoff: "exponential"
+
+observability:
+  tracing:
+    enabled: true
+    endpoint: "localhost:4317"
+    sample_rate: 0.1
+  metrics:
+    enabled: true
+    endpoint: ":9091"
+  logging:
+    level: "info"
+    format: "json"
