@@ -49,6 +49,7 @@ npm run dev
 ### 5. Access Zapp
 
 - **Frontend**: http://localhost:5173
+- **Swagger UI**: http://localhost:8080/swagger/index.html
 - **API Gateway**: http://localhost:8080
 - **Payment Service**: http://localhost:8082
 - **Ledger Service**: http://localhost:8081
@@ -140,6 +141,14 @@ The frontend connects to the API Gateway at `http://localhost:8080` (configurabl
 | GET | `/api/v1/ledger/journals/:id` | Get journal with lines |
 
 ## Testing
+
+### Swagger UI
+
+Interactive API documentation is available at: http://localhost:8080/swagger/index.html
+
+All endpoints are documented and can be tested directly from the browser.
+
+### Unit Tests
 
 ```bash
 # Run all tests

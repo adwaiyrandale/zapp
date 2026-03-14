@@ -1,3 +1,18 @@
+// @title Zapp Payment Gateway API
+// @version 1.0
+// @description Payment Gateway with Payments, Settlements, and Ledger
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url https://github.com/adwaiyrandale/zapp
+// @contact.email support@zapp.com
+
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
+
+// @host localhost:8080
+// @BasePath /
+
 package main
 
 import (
@@ -13,6 +28,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/swagger"
 )
 
 type Server struct {
@@ -26,10 +42,9 @@ func NewServer() *Server {
 	// CORS middleware
 	r.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+			w.Header().Set("Access-Control-Allow-Origin", "*")
 			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
 			w.Header().Set("Access-Control-Allow-Headers", "Accept, Authorization, Content-Type, X-API-Key, Idempotency-Key")
-			w.Header().Set("Access-Control-Allow-Credentials", "true")
 			if r.Method == "OPTIONS" {
 				w.WriteHeader(http.StatusOK)
 				return
@@ -44,6 +59,9 @@ func NewServer() *Server {
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Timeout(30 * time.Second))
+
+	// Swagger
+	r.Get("/swagger/*", swagger.Handler())
 
 	// Health check
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -103,6 +121,7 @@ func (s *Server) Run() error {
 	}()
 
 	log.Printf("API Gateway starting on port %s", s.port)
+	log.Printf("Swagger UI available at http://localhost:%s/swagger/index.html", s.port)
 	return srv.ListenAndServe()
 }
 
