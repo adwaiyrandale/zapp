@@ -49,6 +49,7 @@ export type SettlementStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED'
 
 export interface Account {
   id: string;
+  code?: string;
   name: string;
   type: string;
   balance: number;

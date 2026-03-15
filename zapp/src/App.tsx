@@ -1,17 +1,19 @@
 import { useState } from 'react';
-import { CreditCard, Building2, DollarSign, Activity, Menu, X } from 'lucide-react';
+import { CreditCard, Building2, DollarSign, Activity, Menu, X, Wallet } from 'lucide-react';
 import { Button } from './components/ui/button';
 import { PaymentsPage } from './pages/PaymentsPage';
 import { SettlementsPage } from './pages/SettlementsPage';
 import { LedgerPage } from './pages/LedgerPage';
+import { AccountsPage } from './pages/AccountsPage';
 
-type Page = 'payments' | 'settlements' | 'ledger';
+type Page = 'payments' | 'settlements' | 'ledger' | 'accounts';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('payments');
+  const [currentPage, setCurrentPage] = useState<Page>('accounts');
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const navItems = [
+    { id: 'accounts' as Page, label: 'Accounts', icon: Wallet },
     { id: 'payments' as Page, label: 'Payments', icon: CreditCard },
     { id: 'settlements' as Page, label: 'Settlements', icon: DollarSign },
     { id: 'ledger' as Page, label: 'Ledger', icon: Building2 },
@@ -26,7 +28,7 @@ function App() {
         <div className="p-4 flex items-center justify-between border-b border-slate-800">
           {sidebarOpen && (
             <div className="flex items-center gap-2">
-              <Activity className="h-6 w-6 text-emerald-400" />
+              <Activity className="h-6 w-6 text-yellow-400" />
               <span className="font-bold text-xl">Zapp</span>
             </div>
           )}
@@ -49,7 +51,7 @@ function App() {
                 onClick={() => setCurrentPage(item.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
                   currentPage === item.id
-                    ? 'bg-emerald-500 text-white'
+                    ? 'bg-yellow-400 text-slate-900 font-medium'
                     : 'text-slate-400 hover:bg-slate-800 hover:text-white'
                 }`}
               >
@@ -72,7 +74,8 @@ function App() {
 
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
-        <div className="p-8">
+        <div className="p-8 bg-slate-50 min-h-screen">
+          {currentPage === 'accounts' && <AccountsPage />}
           {currentPage === 'payments' && <PaymentsPage />}
           {currentPage === 'settlements' && <SettlementsPage />}
           {currentPage === 'ledger' && <LedgerPage />}

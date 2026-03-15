@@ -63,17 +63,9 @@ npm run dev
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                           ZAPP FRONTEND (React)                         │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐              │
-│  │ Payments    │  │ Settlements │  │ Ledger      │              │
-│  └──────────────┘  └──────────────┘  └──────────────┘              │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                    │
-                              REST API
-                                    │
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           API GATEWAY (Port 8080)                          │
-│  • Reverse proxy to services                                               │
-│  • CORS support                                                          │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
+│  │ Accounts    │  │ Payments    │  │ Settlements │  │ Ledger      │  │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -89,8 +81,9 @@ npm run dev
 
 ## Zapp Dashboard
 
-The Zapp frontend provides a modern admin interface:
+The Zapp frontend provides a modern admin interface with slate gray and lightning yellow styling:
 
+- **Accounts**: View account holdings by asset type (Assets, Liabilities, Equity, Revenue, Expenses), payments incoming, and settlements outgoing
 - **Payments**: Create, authorize, capture, cancel, refund
 - **Settlements**: Create and manage ACH/wire transfers
 - **Ledger**: View accounts and journal entries

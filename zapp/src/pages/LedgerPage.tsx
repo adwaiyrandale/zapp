@@ -53,13 +53,14 @@ export function LedgerPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Ledger</h1>
-          <p className="text-muted-foreground">Double-entry bookkeeping</p>
+          <h1 className="text-3xl font-bold text-slate-900">Ledger</h1>
+          <p className="text-slate-500">Double-entry bookkeeping</p>
         </div>
         <div className="flex gap-2">
           <Button 
             variant={view === 'accounts' ? 'default' : 'outline'} 
             onClick={() => setView('accounts')}
+            className={view === 'accounts' ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-500' : 'border-slate-600 text-slate-600 hover:bg-slate-100'}
           >
             <Wallet className="h-4 w-4 mr-2" />
             Accounts
@@ -67,11 +68,12 @@ export function LedgerPage() {
           <Button 
             variant={view === 'journals' ? 'default' : 'outline'} 
             onClick={() => setView('journals')}
+            className={view === 'journals' ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-500' : 'border-slate-600 text-slate-600 hover:bg-slate-100'}
           >
             <FileText className="h-4 w-4 mr-2" />
             Journals
           </Button>
-          <Button variant="outline" onClick={loadData} disabled={loading}>
+          <Button variant="outline" onClick={loadData} disabled={loading} className="border-slate-600 text-slate-600 hover:bg-slate-100">
             <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
@@ -79,7 +81,7 @@ export function LedgerPage() {
       </div>
 
       {view === 'accounts' && (
-        <Card>
+        <Card className="border-slate-200">
           <CardHeader>
             <CardTitle>Accounts</CardTitle>
             <CardDescription>Chart of accounts with balances</CardDescription>
@@ -100,20 +102,20 @@ export function LedgerPage() {
                   <TableRow key={account.id}>
                     <TableCell className="font-medium">{account.name}</TableCell>
                     <TableCell>
-                      <Badge variant="outline">{account.type}</Badge>
+                      <Badge variant="outline" className="border-slate-300">{account.type}</Badge>
                     </TableCell>
                     <TableCell className="font-medium">
                       {formatAmount(account.balance, account.currency)}
                     </TableCell>
                     <TableCell>{account.currency}</TableCell>
-                    <TableCell>
+                    <TableCell className="text-slate-500">
                       {new Date(account.created_at).toLocaleDateString()}
                     </TableCell>
                   </TableRow>
                 ))}
                 {accounts.length === 0 && !loading && (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={5} className="text-center py-8 text-slate-500">
                       No accounts found
                     </TableCell>
                   </TableRow>
@@ -125,7 +127,7 @@ export function LedgerPage() {
       )}
 
       {view === 'journals' && (
-        <Card>
+        <Card className="border-slate-200">
           <CardHeader>
             <CardTitle>Journal Entries</CardTitle>
             <CardDescription>All double-entry transactions</CardDescription>
@@ -143,7 +145,7 @@ export function LedgerPage() {
               <TableBody>
                 {journals.map((journal) => (
                   <TableRow key={journal.id}>
-                    <TableCell className="font-mono text-xs">
+                    <TableCell className="font-mono text-xs text-slate-600">
                       {journal.id.slice(0, 8)}...
                     </TableCell>
                     <TableCell>{journal.description}</TableCell>
@@ -156,14 +158,14 @@ export function LedgerPage() {
                         ))}
                       </div>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-slate-500">
                       {new Date(journal.created_at).toLocaleDateString()}
                     </TableCell>
                   </TableRow>
                 ))}
                 {journals.length === 0 && !loading && (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={4} className="text-center py-8 text-slate-500">
                       No journal entries found
                     </TableCell>
                   </TableRow>

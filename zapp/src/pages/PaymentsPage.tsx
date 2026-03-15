@@ -17,12 +17,12 @@ import { Plus, RefreshCw, CheckCircle, XCircle } from 'lucide-react';
 
 const DEMO_MERCHANT_ID = '00000000-0000-0000-0000-000000000001';
 
-const statusVariants: Record<string, "default" | "secondary" | "destructive" | "success" | "warning"> = {
-  PENDING: 'warning',
-  AUTHORIZED: 'success',
-  CAPTURED: 'success',
+const statusVariants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+  PENDING: 'secondary',
+  AUTHORIZED: 'default',
+  CAPTURED: 'default',
   CANCELLED: 'destructive',
-  REFUNDED: 'secondary',
+  REFUNDED: 'outline',
 };
 
 export function PaymentsPage() {
@@ -103,15 +103,15 @@ export function PaymentsPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Payments</h1>
-          <p className="text-muted-foreground">Manage payment transactions</p>
+          <h1 className="text-3xl font-bold text-slate-900">Payments</h1>
+          <p className="text-slate-500">Manage payment transactions</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={loadPayments} disabled={loading}>
+          <Button variant="outline" onClick={loadPayments} disabled={loading} className="border-slate-600 text-slate-600 hover:bg-slate-100">
             <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
-          <Button onClick={() => setShowCreate(!showCreate)}>
+          <Button onClick={() => setShowCreate(!showCreate)} className="bg-yellow-400 text-slate-900 hover:bg-yellow-500">
             <Plus className="h-4 w-4 mr-2" />
             New Payment
           </Button>
@@ -119,7 +119,7 @@ export function PaymentsPage() {
       </div>
 
       {showCreate && (
-        <Card>
+      <Card className="border-slate-200">
           <CardHeader>
             <CardTitle>Create Payment</CardTitle>
             <CardDescription>Create a new payment intent</CardDescription>
@@ -138,12 +138,12 @@ export function PaymentsPage() {
               onChange={(e) => setCurrency(e.target.value)}
               className="w-24"
             />
-            <Button onClick={handleCreate}>Create</Button>
+            <Button onClick={handleCreate} className="bg-yellow-400 text-slate-900 hover:bg-yellow-500">Create</Button>
           </CardContent>
         </Card>
       )}
 
-      <Card>
+      <Card className="border-slate-200">
         <CardHeader>
           <CardTitle>Recent Payments</CardTitle>
           <CardDescription>All payment transactions</CardDescription>
@@ -163,10 +163,10 @@ export function PaymentsPage() {
             <TableBody>
               {payments.map((payment) => (
                 <TableRow key={payment.id}>
-                  <TableCell className="font-mono text-xs">
+                  <TableCell className="font-mono text-xs text-slate-600">
                     {payment.id.slice(0, 8)}...
                   </TableCell>
-                  <TableCell className="font-medium">
+                  <TableCell className="font-medium text-green-600">
                     {formatAmount(payment.amount)}
                   </TableCell>
                   <TableCell>
@@ -185,6 +185,7 @@ export function PaymentsPage() {
                           size="sm" 
                           variant="outline"
                           onClick={() => handleAuthorize(payment.id)}
+                          className="border-slate-600 text-slate-600 hover:bg-slate-100"
                         >
                           <CheckCircle className="h-3 w-3 mr-1" />
                           Authorize
@@ -195,6 +196,7 @@ export function PaymentsPage() {
                           size="sm" 
                           variant="outline"
                           onClick={() => handleCapture(payment.id)}
+                          className="border-slate-600 text-slate-600 hover:bg-slate-100"
                         >
                           <CheckCircle className="h-3 w-3 mr-1" />
                           Capture
@@ -216,7 +218,7 @@ export function PaymentsPage() {
               ))}
               {payments.length === 0 && !loading && (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={6} className="text-center py-8 text-slate-500">
                     No payments found
                   </TableCell>
                 </TableRow>

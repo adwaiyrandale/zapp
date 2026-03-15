@@ -28,7 +28,6 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/go-chi/swagger"
 )
 
 type Server struct {
@@ -61,7 +60,7 @@ func NewServer() *Server {
 	r.Use(middleware.Timeout(30 * time.Second))
 
 	// Swagger
-	r.Get("/swagger/*", swagger.Handler())
+	// r.Get("/swagger/*", swagger.Handler())
 
 	// Health check
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
